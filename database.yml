@@ -1,0 +1,11 @@
+development:
+  dialect: "sqlite3"
+  database: /Users/admin/go/src/github.com/admin/sentryo_sentryo_development.sqlite
+
+test:
+  dialect: "sqlite3"
+  database: /Users/admin/go/src/github.com/admin/sentryo_sentryo_test.sqlite
+
+production:
+  dialect: "sqlite3"
+  database: /Users/admin/go/src/github.com/admin/sentryo_sentryo_production.sqlite
