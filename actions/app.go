@@ -59,6 +59,8 @@ func App() *buffalo.App {
 
 		app.GET("/", HomeHandler)
 		app.GET("/vehicules", VehiculesIndex)
+		app.GET("/vehicules/show", VehiculesShow)
+		app.Resource("/vehicules", VehiculesResource{})
 	}
 
 	return app
