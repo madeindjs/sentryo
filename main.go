@@ -21,12 +21,13 @@ func vehiclesIndex(c echo.Context) error {
 func vehiclesShow(c echo.Context) error {
 	idStr := c.Param("id")
 
-	vehicle := models.Vehicle{
-		Id:   idStr,
-		Name: "Hello",
-	}
+	vehicle, error := models.FindVehicle(idStr)
 
-	return c.JSON(http.StatusOK, vehicle)
+	if error != nil {
+		return c.String(http.StatusNotFound, "Vehicle does not exist")
+	} else {
+		return c.JSON(http.StatusOK, vehicle)
+	}
 }
 
 func main() {

@@ -31,6 +31,8 @@ $ ./main
 
 - Use [Dep](https://golang.github.io/dep) package manager
 - Migrate SQLite database to use index, correct field types; foreign keys, etc..
+- Implement [Threadsafe Singleton](http://marcio.io/2015/07/singleton-pattern-in-go/) database system
+- Create a controller package
 
 ## Links
 

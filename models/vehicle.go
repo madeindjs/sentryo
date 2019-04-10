@@ -1,5 +1,10 @@
 package models
 
+import (
+	"database/sql"
+	"fmt"
+)
+
 type Vehicle struct {
 	Id    string `json:"id"`
 	Name  string `json:"name"`
@@ -24,6 +29,7 @@ type Vehicle struct {
 
 type Vehicles []Vehicle
 
+/// Fetch all Vehicle from database
 func AllVehicles() Vehicles {
 	rows, error := GetDatabase().Query("SELECT id, name, model FROM vehicles")
 
@@ -34,23 +40,31 @@ func AllVehicles() Vehicles {
 	}
 
 	for rows.Next() {
-		vehicle := Vehicle{}
-
-		rows.Scan(&vehicle.Id, &vehicle.Name, &vehicle.Model)
-		vehicles = append(vehicles, vehicle)
+		vehicles = append(vehicles, createVehicleFromRow(rows))
 	}
 
 	return vehicles
 }
 
-func FindVehicle() Vehicle {
+/// Fetch a Vehicle from database
+func FindVehicle(id string) (Vehicle, error) {
+	rows, error := GetDatabase().Query("SELECT id, name, model FROM vehicles WHERE id = ? LIMIT 1", id)
+
+	if error != nil {
+		return Vehicle{}, error
+	}
+
+	for rows.Next() {
+		return createVehicleFromRow(rows), nil
+	}
+
+	return Vehicle{}, fmt.Errorf("Could not find a vehicle")
+}
+
+/// Initialize a Vehicle struct from a SQL response
+func createVehicleFromRow(rows *sql.Rows) Vehicle {
 	vehicle := Vehicle{}
-	// rows, _ := database.Query("SELECT name, model FROM vehicles")
-	// var name string
-	// var model string
-	// for rows.Next() {
-	// 	rows.Scan(&name, &model)
-	// 	fmt.Println(": " + name + " " + model)
-	// }
+	rows.Scan(&vehicle.Id, &vehicle.Name, &vehicle.Model)
+
 	return vehicle
 }
