@@ -11,6 +11,7 @@ import (
 const port = ":8000"
 
 func home(c echo.Context) error {
+	return c.File("README.md")
 	return c.String(http.StatusOK, "Hello Sentryo")
 }
 
