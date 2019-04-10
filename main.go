@@ -2,15 +2,17 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"io"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 )
 
 type Article struct {
-	Title   string `json:"Title"`
-	Desc    string `json:"desc"`
-	Content string `json:"content"`
+	id    int    `json:"id"`
+	title string `json:"title"`
 }
 
 type Articles []Article
@@ -24,20 +26,47 @@ func hello(w http.ResponseWriter, r *http.Request) {
 
 func vehiculesIndex(w http.ResponseWriter, r *http.Request) {
 	articles := Articles{
-		Article{Title: "Hello", Desc: "Article Description", Content: "Article Content"},
-		Article{Title: "Hello 2", Desc: "Article Description", Content: "Article Content"},
+		Article{id: 1, title: "Hello"},
+		Article{id: 2, title: "Hello 2"},
 	}
 	log.Print("GET /vehicules")
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("content-Type", "application/json")
 	json.NewEncoder(w).Encode(articles)
 }
 
-func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", hello)
-	mux.HandleFunc("/vehicules/", vehiculesIndex)
+func vehiculesShow(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		// handle error
+		log.Fatal(err)
+		os.Exit(2)
+	}
+
+	article := Article{
+		id:    1,
+		title: "Hello",
+	}
+
+	log.Print("GET /vehicules/", id)
+
+	w.Header().Set("content-Type", "application/json")
+	json.NewEncoder(w).Encode(article)
+}
+
+func handleRequests() {
+	myRouter := mux.NewRouter().StrictSlash(true)
+	myRouter.HandleFunc("/", hello)
+	myRouter.HandleFunc("/vehicules/", vehiculesIndex)
+	myRouter.HandleFunc("/vehicules/{id}", vehiculesShow)
 
 	log.Print("Start server on http://localhost", port)
-	http.ListenAndServe(port, mux)
+	log.Fatal(http.ListenAndServe(port, myRouter))
+
+}
+
+func main() {
+	handleRequests()
 }
