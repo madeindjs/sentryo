@@ -16,10 +16,15 @@ func main() {
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
 	e.GET("/", controllers.Home)
+	// vehicles
 	e.GET("/vehicles/", controllers.VehiclesIndex)
 	e.GET("/vehicles/:id", controllers.VehiclesShow)
-	e.GET("/starships/", controllers.VehiclesIndex)
-	e.GET("/starships/:id", controllers.VehiclesShow)
+	// starships
+	e.GET("/starships/", controllers.StarshipsIndex)
+	e.GET("/starships/:id", controllers.StarshipsShow)
+	// peoples
+	e.GET("/peoples/", controllers.PeoplesIndex)
+	e.GET("/peoples/:id", controllers.PeoplesShow)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

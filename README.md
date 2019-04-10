@@ -16,13 +16,17 @@ There the current list of REST endpoints about **vehicles**, **users**, and
 - GET </vehicles/:id> to show a vehicle
 - GET </starships/> to list starships in database
 - GET </starships/:id> to show a starship
+- GET </users/> to list users in database
+- GET </users/:id> to show a user
 
 Some concerns about somes choice during development:
 
-- Sentryo use `TEXT` everywhere in database (which is very not good). So I made
-  choice to adapt my code according to the databse schema.
+- Sentryo use `TEXT` everywhere in database (which is **very** not good). So I
+  made choice to adapt my code according to the databse schema.
 - `vehicle` contains a spelling mistake which I included in controller / model /
   url names for constencies reasons
+- `people` table should be renamed as `users` (at least it should be `peoples`,
+  with a plurial mark)
 
 ## Instalation
 
