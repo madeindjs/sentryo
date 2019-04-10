@@ -31,5 +31,3 @@ func GetDatabase() *sql.DB {
 	}
 	return sqliteDatabase
 }
-
-// statement, error := database.Prepare("CREATE TABLE IF NOT EXISTS vehicles (

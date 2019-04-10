@@ -17,7 +17,8 @@ There the current list of REST endpoints about **vehicles**, **users**, and
 
 Some concerns about somes choice during development:
 
-- Sentryo use `TEXT`everywhere in database (which is very not good)
+- Sentryo use `TEXT` everywhere in database (which is very not good). So I made
+  choice to adapt my code according to the databse schema.
 - `vehicle` contains a spelling mistake which I included in controller / model /
   url names for constencies reasons
 
