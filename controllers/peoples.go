@@ -35,3 +35,17 @@ func PeoplesCreate(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, people)
 }
+
+func PeoplesUpdate(c echo.Context) error {
+	people := &models.People{}
+
+	if err := c.Bind(people); err != nil {
+		return err
+	}
+
+	if _, err := people.Save(); err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusAccepted, people)
+}

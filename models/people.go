@@ -45,6 +45,22 @@ func (people *People) Insert() (sql.Result, error) {
 	return res, nil
 }
 
+func (people *People) Save() (sql.Result, error) {
+	stmt, err := GetDatabase().Prepare("UPDATE people SET name = ?, gender = ? WHERE id = ?")
+
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := stmt.Exec(people.Name, people.Gender, people.Id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
 /// Fetch all People from database
 func AllPeoples() Peoples {
 	rows, error := GetDatabase().Query("SELECT id, name, gender FROM people")

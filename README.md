@@ -31,17 +31,26 @@ Some concerns about somes choice during development:
 
 Theres somes examples using cURL:
 
-- Create a user:
+- Create a people:
 
 ~~~bash
 $ curl -X POST -H 'Content-Type: application/json' \
-       -d '{"id":"42","name":"Toto","gender":"Male"}' http://localhost:1323/peoples/
+       -d '{"id":"42","name":"Toto","gender":"Male"}' \
+       http://localhost:1323/peoples/
 ~~~
 
-- Find a user:
+- Find a people:
 
 ~~~bash
 $ curl http://localhost:1323/peoples/42
+~~~
+
+- Update a people:
+
+~~~bash
+$ curl -X PUT -H 'Content-Type: application/json' \
+       -d '{"name":"tata","gender":"male"}'  \
+      http://localhost:1323/peoples/42
 ~~~
 
 ## Instalation
