@@ -6,6 +6,11 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+
+	"fmt"
+
+	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type Vehicule struct {
@@ -48,6 +53,28 @@ func vehiculesShow(c echo.Context) error {
 }
 
 func main() {
+	database, error := sql.Open("sqlite3", "swapi.dat")
+
+	if error != nil {
+		panic("Could not open database")
+	}
+
+	statement, error := database.Prepare("CREATE TABLE IF NOT EXISTS vehicles (name TEXT,model TEXT,manufacturer TEXT,cost_in_credits TEXT,length TEXT,max_atmosphering_speed TEXT,crew TEXT,passengers TEXT,cargo_capacity TEXT,consumables TEXT,vehicle_class TEXT,pilots TEXT,films TEXT,created TEXT,edited TEXT,url TEXT,id TEXT);")
+
+	if error != nil {
+		panic(error)
+	}
+
+	statement.Exec()
+
+	rows, _ := database.Query("SELECT name, model FROM vehicles")
+	var name string
+	var model string
+	for rows.Next() {
+		rows.Scan(&name, &model)
+		fmt.Println(": " + name + " " + model)
+	}
+
 	e := echo.New()
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
