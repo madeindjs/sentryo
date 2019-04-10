@@ -10,12 +10,12 @@ import (
 	"strconv"
 )
 
-type Article struct {
-	id    int    `json:"id"`
-	title string `json:"title"`
+type Vehicule struct {
+	Id    int    `json:"id"`
+	Title string `json:"Title"`
 }
 
-type Articles []Article
+type Vehicules []Vehicule
 
 const port = ":8000"
 
@@ -25,9 +25,9 @@ func hello(w http.ResponseWriter, r *http.Request) {
 }
 
 func vehiculesIndex(w http.ResponseWriter, r *http.Request) {
-	articles := Articles{
-		Article{id: 1, title: "Hello"},
-		Article{id: 2, title: "Hello 2"},
+	articles := Vehicules{
+		Vehicule{Id: 1, Title: "Hello"},
+		Vehicule{Id: 2, Title: "Hello 2"},
 	}
 	log.Print("GET /vehicules")
 
@@ -45,9 +45,9 @@ func vehiculesShow(w http.ResponseWriter, r *http.Request) {
 		os.Exit(2)
 	}
 
-	article := Article{
-		id:    1,
-		title: "Hello",
+	article := Vehicule{
+		Id:    1,
+		Title: "Hello",
 	}
 
 	log.Print("GET /vehicules/", id)
