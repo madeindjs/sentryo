@@ -18,5 +18,8 @@ func main() {
 	e.GET("/", controllers.Home)
 	e.GET("/vehicles/", controllers.VehiclesIndex)
 	e.GET("/vehicles/:id", controllers.VehiclesShow)
+	e.GET("/starships/", controllers.VehiclesIndex)
+	e.GET("/starships/:id", controllers.VehiclesShow)
+
 	e.Logger.Fatal(e.Start(":1323"))
 }

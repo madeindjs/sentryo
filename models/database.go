@@ -19,13 +19,19 @@ func GetDatabase() *sql.DB {
 			panic("Could not open database")
 		}
 
-		statement, error := database.Prepare("CREATE TABLE IF NOT EXISTS vehicles (name TEXT,model TEXT,manufacturer TEXT,cost_in_credits TEXT,length TEXT,max_atmosphering_speed TEXT,crew TEXT,passengers TEXT,cargo_capacity TEXT,consumables TEXT,vehicle_class TEXT,pilots TEXT,films TEXT,created TEXT,edited TEXT,url TEXT,id TEXT);")
-
-		if error != nil {
-			panic(error)
+		tableQueries := [...]string{
+			"CREATE TABLE IF NOT EXISTS vehicles (name TEXT,model TEXT,manufacturer TEXT,cost_in_credits TEXT,length TEXT,max_atmosphering_speed TEXT,crew TEXT,passengers TEXT,cargo_capacity TEXT,consumables TEXT,vehicle_class TEXT,pilots TEXT,films TEXT,created TEXT,edited TEXT,url TEXT,id TEXT);",
+			"CREATE TABLE IF NOT EXISTS  starships (name TEXT,model TEXT,manufacturer TEXT,cost_in_credits TEXT,length TEXT,max_atmosphering_speed TEXT,crew TEXT,passengers TEXT,cargo_capacity TEXT,consumables TEXT,hyperdrive_rating TEXT,MGLT TEXT,starship_class TEXT,pilots TEXT,films TEXT,created TEXT,edited TEXT,url TEXT,id TEXT);",
 		}
 
-		statement.Exec()
+		for _, tableQuery := range tableQueries {
+			statement, error := database.Prepare(tableQuery)
+			if error != nil {
+				panic(error)
+			}
+
+			statement.Exec()
+		}
 
 		sqliteDatabase = database // <--- NOT THREAD SAFE (see http://marcio.io/2015/07/singleton-pattern-in-go/)
 	}

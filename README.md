@@ -14,6 +14,8 @@ There the current list of REST endpoints about **vehicles**, **users**, and
 - GET </> to print this readme
 - GET </vehicles/> to list vehicles in database
 - GET </vehicles/:id> to show a vehicle
+- GET </starships/> to list starships in database
+- GET </starships/:id> to show a starship
 
 Some concerns about somes choice during development:
 
@@ -45,6 +47,7 @@ $ ./main
   for database system
 - Create a controller package
 - Convert Markdown to HTML
+- Factorize Satsrhips & Vehicles (who are basicaly the same thing)
 
 ### Links
 
