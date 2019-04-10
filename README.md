@@ -6,11 +6,11 @@ This use [Echo](https://echo.labstack.com/) Go we framework (because using Plain
 
 ## Instalation
 
+This project use [Dep](https://golang.github.io/dep), so you just have to run
+
 ~~~bash
-$ go get
+$ dep ensure
 ~~~
-
-
 
 ## Usage
 
