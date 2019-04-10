@@ -16,3 +16,4 @@ $ ./main
 ## Links
 
 - <https://thenewstack.io/building-a-web-server-in-go/>
+- <https://tutorialedge.net/golang/creating-restful-api-with-golang/>
