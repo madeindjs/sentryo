@@ -45,6 +45,8 @@ func AllStarships() Starships {
 		starships = append(starships, createStarshipFromRow(rows))
 	}
 
+	rows.Close()
+
 	return starships
 }
 
@@ -59,6 +61,8 @@ func FindStarship(id string) (Starship, error) {
 	for rows.Next() {
 		return createStarshipFromRow(rows), nil
 	}
+
+	rows.Close()
 
 	return Starship{}, fmt.Errorf("Could not find a starship")
 }

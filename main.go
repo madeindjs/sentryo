@@ -25,6 +25,7 @@ func main() {
 	// peoples
 	e.GET("/peoples/", controllers.PeoplesIndex)
 	e.GET("/peoples/:id", controllers.PeoplesShow)
+	e.POST("/peoples/", controllers.PeoplesCreate)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

@@ -21,3 +21,17 @@ func PeoplesShow(c echo.Context) error {
 		return c.JSON(http.StatusOK, vehicle)
 	}
 }
+
+func PeoplesCreate(c echo.Context) error {
+	people := &models.People{}
+
+	if err := c.Bind(people); err != nil {
+		return err
+	}
+
+	if _, err := people.Insert(); err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusCreated, people)
+}

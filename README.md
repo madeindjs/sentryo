@@ -16,8 +16,9 @@ There the current list of REST endpoints about **vehicles**, **users**, and
 - GET </vehicles/:id> to show a vehicle
 - GET </starships/> to list starships in database
 - GET </starships/:id> to show a starship
-- GET </users/> to list users in database
-- GET </users/:id> to show a user
+- GET </peoples/> to list peoples in database
+- GET </peoples/:id> to show a people
+- POST </peoples/> to create a peoples
 
 Some concerns about somes choice during development:
 
@@ -27,6 +28,21 @@ Some concerns about somes choice during development:
   url names for constencies reasons
 - `people` table should be renamed as `users` (at least it should be `peoples`,
   with a plurial mark)
+
+Theres somes examples using cURL:
+
+- Create a user:
+
+~~~bash
+$ curl -X POST -H 'Content-Type: application/json' \
+       -d '{"id":"42","name":"Toto","gender":"Male"}' http://localhost:1323/peoples/
+~~~
+
+- Find a user:
+
+~~~bash
+$ curl http://localhost:1323/peoples/42
+~~~
 
 ## Instalation
 

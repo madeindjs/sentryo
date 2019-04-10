@@ -29,6 +29,22 @@ type People struct {
 
 type Peoples []People
 
+func (people *People) Insert() (sql.Result, error) {
+	stmt, err := GetDatabase().Prepare("INSERT INTO people(id, name, gender) values(?,?,?)")
+
+	if err != nil {
+		return nil, err
+	}
+
+	res, err := stmt.Exec(people.Id, people.Name, people.Gender)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
 /// Fetch all People from database
 func AllPeoples() Peoples {
 	rows, error := GetDatabase().Query("SELECT id, name, gender FROM people")

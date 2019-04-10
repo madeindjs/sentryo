@@ -43,6 +43,8 @@ func AllVehicles() Vehicles {
 		vehicles = append(vehicles, createVehicleFromRow(rows))
 	}
 
+	rows.Close()
+
 	return vehicles
 }
 
@@ -57,6 +59,8 @@ func FindVehicle(id string) (Vehicle, error) {
 	for rows.Next() {
 		return createVehicleFromRow(rows), nil
 	}
+
+	rows.Close()
 
 	return Vehicle{}, fmt.Errorf("Could not find a vehicle")
 }
