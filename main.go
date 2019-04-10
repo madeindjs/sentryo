@@ -1,12 +1,10 @@
 package main
 
 import (
-	"encoding/json"
-	"github.com/gorilla/mux"
-	"io"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 )
 
@@ -19,54 +17,43 @@ type Vehicules []Vehicule
 
 const port = ":8000"
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello Sentryo")
-	log.Print("GET /")
+func home(c echo.Context) error {
+	return c.String(http.StatusOK, "Hello Sentryo")
 }
 
-func vehiculesIndex(w http.ResponseWriter, r *http.Request) {
+func vehiculesIndex(c echo.Context) error {
 	articles := Vehicules{
 		Vehicule{Id: 1, Title: "Hello"},
 		Vehicule{Id: 2, Title: "Hello 2"},
 	}
 	log.Print("GET /vehicules")
 
-	w.Header().Set("content-Type", "application/json")
-	json.NewEncoder(w).Encode(articles)
+	return c.JSON(http.StatusOK, articles)
 }
 
-func vehiculesShow(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
+func vehiculesShow(c echo.Context) error {
+	idStr := c.Param("id")
 
-	id, err := strconv.Atoi(vars["id"])
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		// handle error
-		log.Fatal(err)
-		os.Exit(2)
+		return c.String(http.StatusNotFound, "Vehicule does not exist")
 	}
 
 	article := Vehicule{
-		Id:    1,
+		Id:    id,
 		Title: "Hello",
 	}
 
-	log.Print("GET /vehicules/", id)
-
-	w.Header().Set("content-Type", "application/json")
-	json.NewEncoder(w).Encode(article)
-}
-
-func handleRequests() {
-	myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/", hello)
-	myRouter.HandleFunc("/vehicules/", vehiculesIndex)
-	myRouter.HandleFunc("/vehicules/{id}", vehiculesShow)
-
-	log.Print("Start server on http://localhost", port)
-	log.Fatal(http.ListenAndServe(port, myRouter))
-
+	return c.JSON(http.StatusOK, article)
 }
 
 func main() {
-	handleRequests()
+	e := echo.New()
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))
+	e.GET("/", home)
+	e.GET("/vehicules/", vehiculesIndex)
+	e.GET("/vehicules/:id", vehiculesShow)
+	e.Logger.Fatal(e.Start(":1323"))
 }

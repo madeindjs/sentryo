@@ -2,6 +2,16 @@
 
 A small REST web API endpoints to test GO lang.
 
+This use [Echo](https://echo.labstack.com/) Go we framework (because using Plain Go become uggly AF when application grow).
+
+## Instalation
+
+~~~bash
+$ go get
+~~~
+
+
+
 ## Usage
 
 Install Go then:
@@ -17,3 +27,4 @@ $ ./main
 
 - <https://thenewstack.io/building-a-web-server-in-go/>
 - <https://tutorialedge.net/golang/creating-restful-api-with-golang/>
+- [List of HTTP Codes in Go net/http](https://golang.org/src/net/http/status.go)
