@@ -64,6 +64,7 @@ Simply install dependencies, clone repository and build project using Go compile
 
     $ go get github.com/labstack/echo
     $ go get github.com/mattn/go-sqlite3
+    $ go get github.com/golang/glog
     $ git clone https://github.com/madeindjs/sentryo.git
     $ cd sentryo
     $ go build main.go

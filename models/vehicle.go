@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"github.com/golang/glog"
 )
 
 type Vehicle struct {
@@ -32,18 +33,17 @@ type Vehicles []Vehicle
 /// Fetch all Vehicle from database
 func AllVehicles() Vehicles {
 	rows, error := GetDatabase().Query("SELECT id, name, model FROM vehicles")
+	defer rows.Close()
 
 	vehicles := Vehicles{}
 
 	if error != nil {
-		panic(error)
+		glog.Error(error)
 	}
 
 	for rows.Next() {
 		vehicles = append(vehicles, createVehicleFromRow(rows))
 	}
-
-	rows.Close()
 
 	return vehicles
 }
@@ -54,6 +54,7 @@ func FindVehicle(id string) (Vehicle, error) {
 	defer rows.Close()
 
 	if error != nil {
+		glog.Error(error)
 		return Vehicle{}, error
 	}
 

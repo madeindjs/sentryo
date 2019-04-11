@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"log"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -16,7 +17,7 @@ func GetDatabase() *sql.DB {
 		database, error := sql.Open("sqlite3", databasePath)
 
 		if error != nil {
-			panic("Could not open database")
+			log.Fatal(error)
 		}
 
 		tableQueries := [...]string{
@@ -28,7 +29,7 @@ func GetDatabase() *sql.DB {
 		for _, tableQuery := range tableQueries {
 			statement, error := database.Prepare(tableQuery)
 			if error != nil {
-				panic(error)
+				log.Fatal(error)
 			}
 
 			statement.Exec()

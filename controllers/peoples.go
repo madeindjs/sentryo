@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"../models"
+	"github.com/golang/glog"
 	"github.com/labstack/echo"
-	"log"
 	"net/http"
 )
 
@@ -26,12 +26,12 @@ func PeoplesCreate(c echo.Context) error {
 	people := &models.People{}
 
 	if err := c.Bind(people); err != nil {
-		log.Fatal(err)
+		glog.Error(err)
 		return err
 	}
 
 	if _, err := people.Insert(); err != nil {
-		log.Fatal(err)
+		glog.Error(err)
 		return err
 	}
 
@@ -58,12 +58,12 @@ func PeoplesDelete(c echo.Context) error {
 	people, error := models.FindPeople(idStr)
 
 	if error != nil {
-		log.Fatal(error)
+		glog.Error(error)
 		return c.String(http.StatusNotFound, "People does not exist")
 	}
 
 	if _, err := people.Delete(); err != nil {
-		log.Fatal(err)
+		glog.Error(err)
 		return err
 	}
 

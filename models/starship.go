@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"github.com/golang/glog"
 )
 
 type Starship struct {
@@ -34,18 +35,18 @@ type Starships []Starship
 /// Fetch all Starship from database
 func AllStarships() Starships {
 	rows, error := GetDatabase().Query("SELECT id, name, model FROM starships")
+	defer rows.Close()
 
 	starships := Starships{}
 
 	if error != nil {
-		panic(error)
+		glog.Error(error)
+		return starships
 	}
 
 	for rows.Next() {
 		starships = append(starships, createStarshipFromRow(rows))
 	}
-
-	rows.Close()
 
 	return starships
 }
@@ -56,6 +57,7 @@ func FindStarship(id string) (Starship, error) {
 	defer rows.Close()
 
 	if error != nil {
+		glog.Error(error)
 		return Starship{}, error
 	}
 

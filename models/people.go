@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"github.com/golang/glog"
 )
 
 type People struct {
@@ -30,17 +31,11 @@ type People struct {
 type Peoples []People
 
 func (people *People) Insert() (sql.Result, error) {
-	stmt, err := GetDatabase().Prepare("INSERT INTO people(id, name, gender) values(?,?,?)")
-	defer stmt.Close()
+	res, err := GetDatabase().Exec("INSERT INTO people(id, name, gender) values(?,?,?)", people.Id, people.Name, people.Gender)
 
 	if err != nil {
-		return nil, err
-	}
-
-	res, err := stmt.Exec(people.Id, people.Name, people.Gender)
-
-	if err != nil {
-		return nil, err
+		glog.Error(err)
+		return res, err
 	}
 
 	return res, nil
@@ -50,6 +45,7 @@ func (people *People) Save() (sql.Result, error) {
 	res, err := GetDatabase().Exec("UPDATE people SET name = ?, gender = ? WHERE id = ?", people.Name, people.Gender, people.Id)
 
 	if err != nil {
+		glog.Error(err)
 		return res, err
 	}
 
@@ -60,6 +56,7 @@ func (people *People) Delete() (sql.Result, error) {
 	res, err := GetDatabase().Exec("DELETE FROM people WHERE id = ?", people.Id)
 
 	if err != nil {
+		glog.Error(err)
 		return res, err
 	}
 
@@ -89,6 +86,7 @@ func FindPeople(id string) (People, error) {
 	defer rows.Close()
 
 	if error != nil {
+		glog.Error(error)
 		return People{}, error
 	}
 

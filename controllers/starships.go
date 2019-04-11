@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"../models"
+	"github.com/golang/glog"
 	"github.com/labstack/echo"
 	"net/http"
 )
@@ -16,6 +17,7 @@ func StarshipsShow(c echo.Context) error {
 	vehicle, error := models.FindStarship(idStr)
 
 	if error != nil {
+		glog.Error(error)
 		return c.String(http.StatusNotFound, "Starships does not exist")
 	} else {
 		return c.JSON(http.StatusOK, vehicle)
