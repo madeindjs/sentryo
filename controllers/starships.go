@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"../models"
 	"github.com/golang/glog"
 	"github.com/labstack/echo"
+	"github.com/madeindjs/sentryo/models"
 	"net/http"
 )
 

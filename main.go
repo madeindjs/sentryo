@@ -5,7 +5,7 @@ import (
 	"github.com/labstack/echo/middleware"
 
 	// "fmt"
-	"./controllers"
+	"github.com/madeindjs/sentryo/controllers"
 )
 
 const port = ":8000"
