@@ -75,12 +75,14 @@ Simply install dependencies, clone repository and build project using Go compile
 ### Go further
 
 - Use [Dep](https://golang.github.io/dep) package manager
+- Add some unit test to tests CRUD Models methods
 - Migrate SQLite database to use index, correct field types; foreign keys, etc..
 - Implement [Threadsafe Singleton](http://marcio.io/2015/07/singleton-pattern-in-go/)
   for database system
-- Create a controller package
-- Convert Markdown to HTML
+- Convert Markdown to HTML on the landing page
 - Factorize Starships & Vehicles (who are basically the same thing)
+- Respect [JSON:API](https://jsonapi.org/) norm
+- Add a caching system
 
 ### Links
 
@@ -88,3 +90,4 @@ Simply install dependencies, clone repository and build project using Go compile
 - <https://tutorialedge.net/golang/creating-restful-api-with-golang/>
 - [List of HTTP Codes in Go net/http](https://golang.org/src/net/http/status.go)
 - [Singleton in Go](http://marcio.io/2015/07/singleton-pattern-in-go/)
+- [Go Database documentation](http://go-database-sql.org/)
