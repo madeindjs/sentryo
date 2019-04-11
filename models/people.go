@@ -67,6 +67,32 @@ func (people *People) Delete() (sql.Result, error) {
 	return res, nil
 }
 
+/// This will make an extras SQL queries to fetch linked starships
+func (people *People) fetchStarshipsRelatiosnships() error {
+	rows, error := GetDatabase().Query(`
+		SELECT id, name, model
+		FROM starships
+		INNER JOIN people_starships ON people_starships.starships = starships.id
+		WHERE people = ?;
+	`, people.Id)
+	defer rows.Close()
+
+	if error != nil {
+		glog.Error(error)
+		return error
+	}
+
+	starships := Starships{}
+
+	for rows.Next() {
+		starships = append(starships, CreateStarshipFromRow(rows))
+	}
+
+	people.Starships = starships
+
+	return nil
+}
+
 /// Fetch all People from database
 func AllPeoples() Peoples {
 	rows, error := GetDatabase().Query("SELECT id, name, gender FROM people")
@@ -105,6 +131,8 @@ func FindPeople(id string) (People, error) {
 func createPeopleFromRow(rows *sql.Rows) People {
 	people := People{}
 	rows.Scan(&people.Id, &people.Name, &people.Gender)
+
+	people.fetchStarshipsRelatiosnships()
 
 	return people
 }

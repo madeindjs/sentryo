@@ -45,7 +45,7 @@ func AllStarships() Starships {
 	}
 
 	for rows.Next() {
-		starships = append(starships, createStarshipFromRow(rows))
+		starships = append(starships, CreateStarshipFromRow(rows))
 	}
 
 	return starships
@@ -62,14 +62,14 @@ func FindStarship(id string) (Starship, error) {
 	}
 
 	for rows.Next() {
-		return createStarshipFromRow(rows), nil
+		return CreateStarshipFromRow(rows), nil
 	}
 
 	return Starship{}, fmt.Errorf("Could not find a starship")
 }
 
 /// Initialize a Starship struct from a SQL response
-func createStarshipFromRow(rows *sql.Rows) Starship {
+func CreateStarshipFromRow(rows *sql.Rows) Starship {
 	starship := Starship{}
 	rows.Scan(&starship.Id, &starship.Name, &starship.Model)
 
