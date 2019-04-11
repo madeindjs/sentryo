@@ -3,6 +3,7 @@ package controllers
 import (
 	"../models"
 	"github.com/labstack/echo"
+	"log"
 	"net/http"
 )
 
@@ -26,10 +27,12 @@ func PeoplesCreate(c echo.Context) error {
 	people := &models.People{}
 
 	if err := c.Bind(people); err != nil {
+		log.Fatal(err)
 		return err
 	}
 
 	if _, err := people.Insert(); err != nil {
+		log.Fatal(err)
 		return err
 	}
 
@@ -38,6 +41,7 @@ func PeoplesCreate(c echo.Context) error {
 
 func PeoplesUpdate(c echo.Context) error {
 	people := &models.People{}
+	people.Id = c.Param("id")
 
 	if err := c.Bind(people); err != nil {
 		return err
