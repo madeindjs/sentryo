@@ -24,6 +24,8 @@ func GetDatabase() *sql.DB {
 			"CREATE TABLE IF NOT EXISTS vehicles (name TEXT,model TEXT,manufacturer TEXT,cost_in_credits TEXT,length TEXT,max_atmosphering_speed TEXT,crew TEXT,passengers TEXT,cargo_capacity TEXT,consumables TEXT,vehicle_class TEXT,pilots TEXT,films TEXT,created TEXT,edited TEXT,url TEXT,id TEXT);",
 			"CREATE TABLE IF NOT EXISTS starships (name TEXT,model TEXT,manufacturer TEXT,cost_in_credits TEXT,length TEXT,max_atmosphering_speed TEXT,crew TEXT,passengers TEXT,cargo_capacity TEXT,consumables TEXT,hyperdrive_rating TEXT,MGLT TEXT,starship_class TEXT,pilots TEXT,films TEXT,created TEXT,edited TEXT,url TEXT,id TEXT);",
 			"CREATE TABLE IF NOT EXISTS people (name TEXT,height TEXT,mass TEXT,hair_color TEXT,skin_color TEXT,eye_color TEXT,birth_year TEXT,gender TEXT,homeworld TEXT,films TEXT,species TEXT,vehicles TEXT,starships TEXT,created TEXT,edited TEXT,url TEXT,id TEXT);",
+			"CREATE TABLE IF NOT EXISTS people_vehicles (people TEXT,vehicles TEXT);",
+			"CREATE TABLE IF NOT EXISTS people_starships (people TEXT,starships TEXT);",
 		}
 
 		for _, tableQuery := range tableQueries {

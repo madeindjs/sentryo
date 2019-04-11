@@ -11,6 +11,10 @@ type People struct {
 	Name   string `json:"name"`
 	Gender string `json:"gender"`
 
+	// relationships
+	Vehicles  []Vehicle  `json:"vehicles"`
+	Starships []Starship `json:"starships"`
+
 	// Omited for simplicity reasons :)
 	// Height string
 	// Mass string
