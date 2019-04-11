@@ -50,11 +50,13 @@ Remove a people:
 
 ## Installation
 
-Simply install dependencies, clone repository and build project using Go compiler:
+Simply run `go get` & build project using Go compiler:
 
     $ go get github.com/madeindjs/sentryo
     $ cd "$GOPATH/github.com/madeindjs/sentryo"
     $ go build main.go
+    
+> Please note you need to [Install SQlite](https://www.sqlite.org/download.html) on your system
 
 ---
 
