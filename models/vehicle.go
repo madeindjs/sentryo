@@ -42,7 +42,7 @@ func AllVehicles() Vehicles {
 	}
 
 	for rows.Next() {
-		vehicles = append(vehicles, createVehicleFromRow(rows))
+		vehicles = append(vehicles, CreateVehicleFromRow(rows))
 	}
 
 	return vehicles
@@ -59,14 +59,14 @@ func FindVehicle(id string) (Vehicle, error) {
 	}
 
 	for rows.Next() {
-		return createVehicleFromRow(rows), nil
+		return CreateVehicleFromRow(rows), nil
 	}
 
 	return Vehicle{}, fmt.Errorf("Could not find a vehicle")
 }
 
 /// Initialize a Vehicle struct from a SQL response
-func createVehicleFromRow(rows *sql.Rows) Vehicle {
+func CreateVehicleFromRow(rows *sql.Rows) Vehicle {
 	vehicle := Vehicle{}
 	rows.Scan(&vehicle.Id, &vehicle.Name, &vehicle.Model)
 
