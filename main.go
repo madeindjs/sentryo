@@ -27,6 +27,7 @@ func main() {
 	e.GET("/peoples/:id", controllers.PeoplesShow)
 	e.POST("/peoples/", controllers.PeoplesCreate)
 	e.PUT("/peoples/:id", controllers.PeoplesUpdate)
+	e.DELETE("/peoples/:id", controllers.PeoplesDelete)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

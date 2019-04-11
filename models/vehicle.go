@@ -51,6 +51,7 @@ func AllVehicles() Vehicles {
 /// Fetch a Vehicle from database
 func FindVehicle(id string) (Vehicle, error) {
 	rows, error := GetDatabase().Query("SELECT id, name, model FROM vehicles WHERE id = ? LIMIT 1", id)
+	defer rows.Close()
 
 	if error != nil {
 		return Vehicle{}, error
@@ -59,8 +60,6 @@ func FindVehicle(id string) (Vehicle, error) {
 	for rows.Next() {
 		return createVehicleFromRow(rows), nil
 	}
-
-	rows.Close()
 
 	return Vehicle{}, fmt.Errorf("Could not find a vehicle")
 }

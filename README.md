@@ -25,6 +25,7 @@ There the current list of REST endpoints about **vehicles**, **users**, and
   - GET     `/peoples/:id` to show a people
   - POST    `/peoples/` to create a people
   - PUT     `/peoples/:id` to update a people
+  - DELETE  `/peoples/:id` to destroy a people
 
 Some concerns about some choice during development:
 
@@ -37,23 +38,27 @@ Some concerns about some choice during development:
 
 Theres some examples using cURL:
 
-- Create a people:
+Create a people:
 
     $ curl -X POST -H 'Content-Type: application/json' \
            -d '{"id":"42","name":"Toto","gender":"Male"}' \
            http://localhost:1323/peoples/
 
-- Find a people:
+Find a people:
 
     $ curl http://localhost:1323/peoples/42
 
-- Update a people:
+Update a people:
 
     $ curl -X PUT -H 'Content-Type: application/json' \
            -d '{"name":"tata","gender":"male"}'  \
           http://localhost:1323/peoples/42
 
-## Instalation
+Remove a people:
+
+    $ curl -X DELETE http://localhost:1323/peoples/42
+
+## Installation
 
 Simply install dependencies, clone repository and build project using Go compiler:
 

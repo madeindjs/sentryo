@@ -31,6 +31,7 @@ type Peoples []People
 
 func (people *People) Insert() (sql.Result, error) {
 	stmt, err := GetDatabase().Prepare("INSERT INTO people(id, name, gender) values(?,?,?)")
+	defer stmt.Close()
 
 	if err != nil {
 		return nil, err
@@ -46,16 +47,20 @@ func (people *People) Insert() (sql.Result, error) {
 }
 
 func (people *People) Save() (sql.Result, error) {
-	stmt, err := GetDatabase().Prepare("UPDATE people SET name = ?, gender = ? WHERE id = ?")
+	res, err := GetDatabase().Exec("UPDATE people SET name = ?, gender = ? WHERE id = ?", people.Name, people.Gender, people.Id)
 
 	if err != nil {
-		return nil, err
+		return res, err
 	}
 
-	res, err := stmt.Exec(people.Name, people.Gender, people.Id)
+	return res, nil
+}
+
+func (people *People) Delete() (sql.Result, error) {
+	res, err := GetDatabase().Exec("DELETE FROM people WHERE id = ?", people.Id)
 
 	if err != nil {
-		return nil, err
+		return res, err
 	}
 
 	return res, nil
@@ -81,6 +86,7 @@ func AllPeoples() Peoples {
 /// Fetch a People from database
 func FindPeople(id string) (People, error) {
 	rows, error := GetDatabase().Query("SELECT id, name, gender FROM people WHERE id = ? LIMIT 1", id)
+	defer rows.Close()
 
 	if error != nil {
 		return People{}, error

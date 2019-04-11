@@ -53,6 +53,7 @@ func AllStarships() Starships {
 /// Fetch a Starship from database
 func FindStarship(id string) (Starship, error) {
 	rows, error := GetDatabase().Query("SELECT id, name, model FROM starships WHERE id = ? LIMIT 1", id)
+	defer rows.Close()
 
 	if error != nil {
 		return Starship{}, error
@@ -61,8 +62,6 @@ func FindStarship(id string) (Starship, error) {
 	for rows.Next() {
 		return createStarshipFromRow(rows), nil
 	}
-
-	rows.Close()
 
 	return Starship{}, fmt.Errorf("Could not find a starship")
 }
